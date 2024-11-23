@@ -23,14 +23,15 @@ class ProfileContent {
       {required ProfileContent another,
       required String name,
       required String email,
-      required String phone})
-      : profileIcon = another.profileIcon,
-        password = another.password,
+      required String phone,
+      required String profileIcon})
+      : password = another.password,
         favoritePlaces = another.favoritePlaces,
         receiveNotifications = another.receiveNotifications,
         name = (name.isEmpty) ? another.name : name,
         email = (email.isEmpty) ? another.email : email,
-        phone = (phone.isEmpty) ? another.phone : phone;
+        phone = (phone.isEmpty) ? another.phone : phone,
+        profileIcon = (profileIcon.isEmpty) ? another.profileIcon : profileIcon;
 
   static fromMap(map) {
     return ProfileContent(

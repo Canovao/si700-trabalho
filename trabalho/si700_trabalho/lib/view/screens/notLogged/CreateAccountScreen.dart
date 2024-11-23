@@ -4,6 +4,7 @@ import 'package:si700_trabalho/bloc/AuthBloc.dart';
 import 'package:si700_trabalho/bloc/LoginBloc.dart';
 import 'package:si700_trabalho/model/ProfileContent.dart';
 import 'package:si700_trabalho/model/ProfileIcons.dart';
+import 'package:si700_trabalho/view/layout/ProfileIconSelectorLayout.dart';
 import 'package:si700_trabalho/view/layout/text/BaseTextLayout.dart';
 import 'package:si700_trabalho/view/layout/text/BaseTextNoStyleLayout.dart';
 import 'package:si700_trabalho/view/layout/text/ScreenTitleTextLayout.dart';
@@ -78,19 +79,11 @@ class CreateAccountScreen extends StatelessWidget {
             SizedBox(height: 10),
             ScreenTitleTextlayout(text: 'Criar conta'),
             SizedBox(height: 20),
-            GestureDetector(
-              onTap: () => _chooseProfileIcon(context, (icon) {
-                selectedProfileIcon = icon;
-              }),
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: selectedProfileIcon != null
-                    ? AssetImage(selectedProfileIcon)
-                    : null,
-                child: selectedProfileIcon == null
-                    ? Icon(Icons.person, size: 50, color: Colors.grey)
-                    : null,
-              ),
+            ProfileIconSelectorLayout(
+              selectedProfileIcon: selectedProfileIcon,
+              whenSelectIcon: (String str) {
+                selectedProfileIcon = str;
+              },
             ),
             SizedBox(height: 20),
             TextField(

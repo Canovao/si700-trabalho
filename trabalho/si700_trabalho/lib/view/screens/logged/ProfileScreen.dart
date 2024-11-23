@@ -12,6 +12,7 @@ class ProfileScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final AccountBloc _accountBloc = AccountBloc();
+  String? selectedProfileIcon = ProfileContent.self!.profileIcon;
   ProfileScreen({super.key});
 
   _getUserData() {
@@ -106,7 +107,9 @@ class ProfileScreen extends StatelessWidget {
                                   another: ProfileContent.self!,
                                   name: _nameController.text,
                                   email: _emailController.text,
-                                  phone: _phoneController.text);
+                                  phone: _phoneController.text,
+                                  profileIcon: selectedProfileIcon ??
+                                      ProfileContent.self!.profileIcon);
 
                           ProfileContentProvider.helper.update(profileContent);
 
@@ -115,7 +118,12 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  ProfileIconSelectorLayout(),
+                  ProfileIconSelectorLayout(
+                    selectedProfileIcon: selectedProfileIcon,
+                    whenSelectIcon: (String str) {
+                      selectedProfileIcon = str;
+                    },
+                  ),
                   TextField(
                     controller: _nameController,
                     decoration: InputDecoration(

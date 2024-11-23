@@ -3,7 +3,12 @@ import 'package:si700_trabalho/model/ProfileContent.dart';
 import 'package:si700_trabalho/model/ProfileIcons.dart';
 
 class ProfileIconSelectorLayout extends StatefulWidget {
-  const ProfileIconSelectorLayout({super.key});
+  Function(String) whenSelectIcon;
+  String? selectedProfileIcon;
+  ProfileIconSelectorLayout(
+      {required this.selectedProfileIcon,
+      required this.whenSelectIcon,
+      super.key});
 
   @override
   State<ProfileIconSelectorLayout> createState() =>
@@ -50,15 +55,16 @@ class _ProfileIconSelectorLayoutState extends State<ProfileIconSelectorLayout> {
     return GestureDetector(
       onTap: () => _chooseProfileIcon(context, (icon) {
         setState(() {
-          ProfileContent.self?.profileIcon = icon;
+          widget.whenSelectIcon(icon);
+          widget.selectedProfileIcon = icon;
         });
       }),
       child: CircleAvatar(
         radius: 50,
-        backgroundImage: ProfileContent.self?.profileIcon != null
-            ? AssetImage(ProfileContent.self!.profileIcon)
+        backgroundImage: widget.selectedProfileIcon != null
+            ? AssetImage(widget.selectedProfileIcon!)
             : null,
-        child: ProfileContent.self?.profileIcon == null
+        child: widget.selectedProfileIcon == null
             ? Icon(Icons.person, size: 50, color: Colors.grey)
             : null,
       ),
