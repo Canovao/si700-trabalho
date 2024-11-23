@@ -54,6 +54,7 @@ class BaseCardlayout extends StatelessWidget {
                             TableRow(
                               children: [
                                 Align(
+                                  widthFactor: 2,
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     cardContent!.name,
@@ -62,20 +63,19 @@ class BaseCardlayout extends StatelessWidget {
                                   ),
                                 ),
                                 Align(
-                                  alignment: Alignment.center,
-                                  child: Text(cardContent!.country),
+                                  widthFactor: 0.5,
+                                  alignment: Alignment.centerRight,
+                                  child: Text(cardContent!.city),
                                 ),
                                 Align(
+                                  widthFactor: 0.5,
                                   alignment: Alignment.centerRight,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.star,
-                                          color: Colors.amber, size: 16),
-                                      SizedBox(width: 5),
-                                      Text(cardContent!.rating.toString()),
-                                    ],
-                                  ),
+                                  child: Text(cardContent!.state),
+                                ),
+                                Align(
+                                  widthFactor: 0.5,
+                                  alignment: Alignment.centerRight,
+                                  child: Text(cardContent!.country),
                                 ),
                               ],
                             )

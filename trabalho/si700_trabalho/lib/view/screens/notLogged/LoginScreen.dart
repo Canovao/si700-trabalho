@@ -66,10 +66,6 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _login(BuildContext context) {
-    // TODO FAZER O LOGIN
-    print('Email: ${_emailController.text}');
-    print('Senha: ${_passwordController.text}');
-
     if (_emailController.text == '' || _passwordController.text == '') {
       showDialog<String>(
         context: context,

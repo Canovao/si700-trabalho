@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum AccountState { Idle, Editing, Favorites, History }
+enum AccountState { Idle, Editing, Favorites }
 
-enum AccountEvent { Idle, Editing, Favorites, History }
+enum AccountEvent { Idle, Editing, Favorites }
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   AccountBloc() : super(AccountState.Idle) {
@@ -16,9 +16,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           break;
         case AccountEvent.Favorites:
           emit(AccountState.Favorites);
-          break;
-        case AccountEvent.History:
-          emit(AccountState.History);
           break;
       }
     });

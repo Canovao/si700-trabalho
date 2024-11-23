@@ -20,14 +20,13 @@ class _LoggedLayoutState extends State<LoggedLayout> {
   int _currentScreen = 0;
 
   _getUserAvatar() {
-    // TODO IMPLEMENTAR UMA LÓGICA DE VERDADE PRA MOSTRAR O AVATAR DO USUÁRIO
     return Row(
       children: [
         CircleAvatar(
           backgroundImage: AssetImage(ProfileContent.self!.profileIcon),
         ),
         SizedBox(width: 10),
-        ScreenSubTitleTextlayout(text: 'Leonardo'),
+        ScreenSubTitleTextlayout(text: ProfileContent.self!.name),
       ],
     );
   }

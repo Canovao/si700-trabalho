@@ -17,8 +17,6 @@ class CreateAccountScreen extends StatelessWidget {
 
   late LoginBloc loginBloc;
 
-  // TODO ADICIONAR ÍCONES DE VERDADE NO PROJETO
-
   void _chooseProfileIcon(
       BuildContext context, Function(String) onIconSelected) {
     showModalBottomSheet(

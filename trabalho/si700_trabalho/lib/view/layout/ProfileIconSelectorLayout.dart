@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:si700_trabalho/model/ProfileContent.dart';
 import 'package:si700_trabalho/model/ProfileIcons.dart';
 
 class ProfileIconSelectorLayout extends StatefulWidget {

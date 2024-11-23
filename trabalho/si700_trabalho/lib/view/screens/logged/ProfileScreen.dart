@@ -169,8 +169,6 @@ class ProfileScreen extends StatelessWidget {
                   ScreenTitleTextlayout(text: 'Favoritos'),
                   _buildFavorites()
                 ])));
-          case AccountState.History:
-            return const Text('History');
         }
       },
     );
