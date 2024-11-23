@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:si700_trabalho/bloc/AuthBloc.dart';
 import 'package:si700_trabalho/bloc/LoginBloc.dart';
-import 'package:si700_trabalho/model/ProfileContent.dart';
+import 'package:si700_trabalho/view/layout/text/BaseTextLayout.dart';
 import 'package:si700_trabalho/view/layout/text/BaseTextNoStyleLayout.dart';
 import 'package:si700_trabalho/view/layout/text/ScreenTitleTextLayout.dart';
 
@@ -45,7 +47,7 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _login(),
+              onPressed: () => _login(context),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size.fromHeight(50),
               ),
@@ -63,27 +65,44 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void _login() {
+  void _login(BuildContext context) {
     // TODO FAZER O LOGIN
     print('Email: ${_emailController.text}');
     print('Senha: ${_passwordController.text}');
 
-    // TODO PUXAR O PROFILECONTENT DO BANCO e colocar no self
+    if (_emailController.text == '' || _passwordController.text == '') {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                BaseTextLayout(
+                    text: 'Preencha todos os campos!',
+                    textAlign: TextAlign.center),
+                SizedBox(height: 15),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const BaseTextNoStyleLayout(text: 'Ok'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      return;
+    }
 
-    // FIXME linha abaixo é mock
-    ProfileContent.self = ProfileContent(
-      name: 'Leonardo',
-      email: 'email@exemplo.com',
-      phone: '19999998888',
-      profileIcon: '',
-      password: '',
-      receiveNotifications: false,
-      favoritePlaces: List.of(['lugar1', 'lugar2']),
-    );
-
-    // TODO E DEPOIS DE FAZER O LOGIN, AÍ SIM MANDAR O EVENTO, mas por enquanto passa direto
-
-    loginBloc.add(LoginEvent.Login);
+    BlocProvider.of<AuthBloc>(context).add(LoginUser(
+      loginBloc: loginBloc,
+      username: _emailController.text,
+      password: _passwordController.text,
+    ));
   }
 
   void _createAccount() {

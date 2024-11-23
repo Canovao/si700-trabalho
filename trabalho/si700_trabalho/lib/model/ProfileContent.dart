@@ -1,13 +1,13 @@
 class ProfileContent {
   static ProfileContent? self;
 
-  final String profileIcon;
+  String profileIcon;
   final String name;
   final String email;
   final String phone;
   final String password;
   final bool receiveNotifications;
-  final List<String> favoritePlaces;
+  final List<dynamic> favoritePlaces;
 
   ProfileContent({
     required this.profileIcon,
@@ -31,4 +31,27 @@ class ProfileContent {
         name = (name.isEmpty) ? another.name : name,
         email = (email.isEmpty) ? another.email : email,
         phone = (phone.isEmpty) ? another.phone : phone;
+
+  static fromMap(map) {
+    return ProfileContent(
+      profileIcon: map["profileIcon"],
+      name: map["name"],
+      email: map["email"],
+      phone: map["phone"],
+      password: "",
+      receiveNotifications: map["receiveNotifications"],
+      favoritePlaces: map["favoritePlaces"],
+    );
+  }
+
+  toMap() {
+    var map = <String, dynamic>{};
+    map["profileIcon"] = profileIcon;
+    map["name"] = name;
+    map["email"] = email;
+    map["phone"] = phone;
+    map["receiveNotifications"] = receiveNotifications;
+    map["favoritePlaces"] = favoritePlaces;
+    return map;
+  }
 }

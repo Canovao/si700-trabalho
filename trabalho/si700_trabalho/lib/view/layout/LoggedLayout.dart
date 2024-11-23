@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:si700_trabalho/bloc/TravelBloc.dart';
+import 'package:si700_trabalho/model/ProfileContent.dart';
 import 'package:si700_trabalho/view/layout/text/ScreenSubTitleTextLayout.dart';
 import 'package:si700_trabalho/view/screens/logged/DetailsScreen.dart';
 import 'package:si700_trabalho/view/screens/logged/HomeScreen.dart';
@@ -21,9 +22,9 @@ class _LoggedLayoutState extends State<LoggedLayout> {
   _getUserAvatar() {
     // TODO IMPLEMENTAR UMA LÓGICA DE VERDADE PRA MOSTRAR O AVATAR DO USUÁRIO
     return Row(
-      children: const [
+      children: [
         CircleAvatar(
-          backgroundImage: NetworkImage('https://example.com/profile-pic.png'),
+          backgroundImage: AssetImage(ProfileContent.self!.profileIcon),
         ),
         SizedBox(width: 10),
         ScreenSubTitleTextlayout(text: 'Leonardo'),

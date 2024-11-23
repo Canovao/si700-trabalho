@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:si700_trabalho/bloc/AuthBloc.dart';
 import 'package:si700_trabalho/bloc/LoginBloc.dart';
 import 'package:si700_trabalho/model/ProfileContent.dart';
 import 'package:si700_trabalho/model/ProfileIcons.dart';
@@ -174,6 +176,34 @@ class CreateAccountScreen extends StatelessWidget {
     print('Receber notificações por e-mail: $receiveNotifications');
     print('Ícone de perfil selecionado: $selectedProfileIcon');
 
+    if (_emailController.text == '' || _passwordController.text == '') {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                BaseTextLayout(
+                    text: 'Preencha todos os campos!',
+                    textAlign: TextAlign.center),
+                SizedBox(height: 15),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const BaseTextNoStyleLayout(text: 'Ok'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+
     ProfileContent profileContent = ProfileContent(
       profileIcon: selectedProfileIcon ?? '',
       name: _nameController.text,
@@ -183,35 +213,12 @@ class CreateAccountScreen extends StatelessWidget {
       receiveNotifications: receiveNotifications,
     );
 
-    // TODO SALVAR O PROFILECONTENT NO BANCO DE DADOS
+    BlocProvider.of<AuthBloc>(context).add(RegisterUser(
+      profileContent: profileContent,
+      username: _emailController.text,
+      password: _passwordController.text,
+    ));
 
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => Dialog(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              BaseTextLayout(
-                  text:
-                      'Conta criada com sucesso!\nSerá necessário fazer login para entrar.',
-                  textAlign: TextAlign.center),
-              SizedBox(height: 15),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const BaseTextNoStyleLayout(text: 'Ok'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-    // TODO POR ENQUANTO PASSANDO DIRETO
     loginBloc.add(LoginEvent.NotLogged);
   }
 }

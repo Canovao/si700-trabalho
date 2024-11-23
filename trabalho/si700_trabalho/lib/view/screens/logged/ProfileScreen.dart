@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:si700_trabalho/bloc/AccountBloc.dart';
 import 'package:si700_trabalho/model/ProfileContent.dart';
+import 'package:si700_trabalho/provider/ProfileContentProvider.dart';
+import 'package:si700_trabalho/view/layout/ProfileIconSelectorLayout.dart';
 import 'package:si700_trabalho/view/layout/text/BaseTextLayout.dart';
-import 'package:si700_trabalho/view/layout/text/BaseTextNoStyleLayout.dart';
-import 'package:si700_trabalho/view/layout/text/ScreenSubTitleTextLayout.dart';
 import 'package:si700_trabalho/view/layout/text/ScreenTitleTextLayout.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -15,8 +15,11 @@ class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
   _getUserData() {
-    // TODO IMPLEMENTAR UMA LÓGICA DE VERDADE PRA MOSTRAR OS DADOS DO USUÁRIO
     return Column(children: [
+      CircleAvatar(
+        radius: 100,
+        backgroundImage: AssetImage(ProfileContent.self!.profileIcon),
+      ),
       ScreenTitleTextlayout(text: ProfileContent.self!.name),
       BaseTextLayout(
         text: ProfileContent.self!.email,
@@ -98,7 +101,6 @@ class ProfileScreen extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.check),
                         onPressed: () {
-                          // TODO IMPLEMENTAR LÓGICA DE SALVAR DADOS ALTERADOS
                           ProfileContent profileContent =
                               ProfileContent.fromAnother(
                                   another: ProfileContent.self!,
@@ -106,40 +108,14 @@ class ProfileScreen extends StatelessWidget {
                                   email: _emailController.text,
                                   phone: _phoneController.text);
 
-                          // TODO SALVAR OS DADOS
-
-                          ProfileContent.self = profileContent;
+                          ProfileContentProvider.helper.update(profileContent);
 
                           _accountBloc.add(AccountEvent.Idle);
-                          showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => Dialog(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    BaseTextLayout(
-                                        text: 'Dados alterados com sucesso!',
-                                        textAlign: TextAlign.center),
-                                    SizedBox(height: 15),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const BaseTextNoStyleLayout(
-                                          text: 'Ok'),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
                         },
                       ),
                     ],
                   ),
+                  ProfileIconSelectorLayout(),
                   TextField(
                     controller: _nameController,
                     decoration: InputDecoration(
