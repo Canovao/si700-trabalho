@@ -52,37 +52,31 @@ class BasePlaceInfoLayout extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Table(
+          Column(
             children: [
-              TableRow(
-                children: [
-                  Align(
-                    widthFactor: 2,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      cardContent!.name,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: fontSize + fontSize * 0.1),
-                    ),
+              Row(children: [
+                Expanded(
+                  child: Text(
+                    cardContent!.name,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: fontSize + fontSize * 0.1),
                   ),
-                  Align(
-                    widthFactor: 0.5,
-                    alignment: Alignment.center,
+                ),
+              ]),
+              Row(
+                children: [
+                  Expanded(
                     child: Text(
                       cardContent!.city,
                       style: TextStyle(fontSize: fontSize),
                     ),
                   ),
-                  Align(
-                    widthFactor: 0.5,
-                    alignment: Alignment.center,
+                  Expanded(
                     child: Text(cardContent!.state,
                         style: TextStyle(fontSize: fontSize)),
                   ),
-                  Align(
-                    widthFactor: 0.5,
-                    alignment: Alignment.centerRight,
+                  Expanded(
                     child: Text(cardContent!.country,
                         style: TextStyle(fontSize: fontSize)),
                   ),

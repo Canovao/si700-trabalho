@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:si700_trabalho/model/ProfileContent.dart';
+import 'package:si700_trabalho/provider/AuthProvider.dart';
+import 'package:si700_trabalho/provider/ProfileContentProvider.dart';
 import 'package:si700_trabalho/view/layout/text/BaseTextLayout.dart';
 import 'package:si700_trabalho/view/layout/text/ScreenTitleTextLayout.dart';
 import 'package:si700_trabalho/view/screens/logged/EditingProfileScreen.dart';
@@ -72,7 +75,15 @@ class ProfileScreen extends StatelessWidget {
                     },
                     child: BaseTextLayout(text: 'Favoritos'))
               ],
-            )
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Icon(Icons.logout, color: Colors.red),
+              TextButton(
+                  onPressed: () {
+                    FirebaseAuthenticationService.helper.signOut();
+                  },
+                  child: BaseTextLayout(text: 'Sair'))
+            ])
           ],
         ),
       ),

@@ -1,0 +1,58 @@
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("a");
+});
+
+app.get("/search", (req, res) => {
+  const options = { method: "GET", headers: { accept: "application/json" } };
+
+  fetch(
+    "https://api.content.tripadvisor.com/api/v1/location/search?key=CE0333CC20B0488B98C99695AC0E67A4&searchQuery=" +
+      req.query.searchQuery +
+      "&language=pt",
+    options,
+  )
+    .then((ress) => ress.json())
+    .then((ress) => res.send(ress))
+    .catch((err) => console.error(err));
+});
+
+app.get("/details", (req, res) => {
+  const options = { method: "GET", headers: { accept: "application/json" } };
+
+  fetch(
+    "https://api.content.tripadvisor.com/api/v1/location/" +
+      req.query.locationId +
+      "/details?key=CE0333CC20B0488B98C99695AC0E67A4&language=pt&currency=BRL&category=hotels",
+    options,
+  )
+    .then((ress) => ress.json())
+    .then((ress) => res.send(ress))
+    .catch((err) => console.error(err));
+});
+
+app.get("/photos", (req, res) => {
+  const options = { method: "GET", headers: { accept: "application/json" } };
+
+  fetch(
+    "https://api.content.tripadvisor.com/api/v1/location/" +
+      req.query.locationId +
+      "/photos?key=CE0333CC20B0488B98C99695AC0E67A4&language=pt&limit=1&source=Management",
+    options,
+  )
+    .then((ress) => ress.json())
+    .then((ress) => res.send(ress))
+    .catch((err) => console.error(err));
+});
+
+const server = require("http").createServer(app);
+var io = require("socket.io")(server);
+server.listen(3000, () => {});
+
+io.on("connection", (socket) => {});

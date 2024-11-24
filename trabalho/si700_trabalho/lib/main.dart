@@ -4,9 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:si700_trabalho/bloc/AuthBloc.dart';
 import 'package:si700_trabalho/bloc/LoginBloc.dart';
-import 'package:si700_trabalho/bloc/ProfileContentBloc.dart';
 import 'package:si700_trabalho/view/screens/notLogged/CreateAccountScreen.dart';
-import 'package:si700_trabalho/view/screens/logged/LoggedLayout.dart';
+import 'package:si700_trabalho/view/layout/LoggedLayout.dart';
 import 'package:si700_trabalho/view/screens/notLogged/LoginScreen.dart';
 
 void main() async {
@@ -30,7 +29,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   final LoginBloc loginBloc = LoginBloc();
   final AuthBloc authBloc = AuthBloc();
-  final ProfileContentBloc profileContentBloc = ProfileContentBloc();
 
   MyApp({super.key});
 
@@ -43,9 +41,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<LoginBloc>(
           create: (context) => loginBloc,
-        ),
-        BlocProvider<ProfileContentBloc>(
-          create: (context) => profileContentBloc,
         ),
       ],
       child: MaterialApp(
@@ -67,6 +62,9 @@ class MyApp extends StatelessWidget {
                   );
                 },
               );
+            }
+            if (state is Unauthenticated) {
+              loginBloc.add(LoginEvent.NotLogged);
             } else if (state is Authenticated) {
               loginBloc.add(LoginEvent.Login);
             }

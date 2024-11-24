@@ -12,9 +12,15 @@ class DetailsResponseItem {
 
   static DetailsResponseItem fromJson(jsonDecode) {
     return DetailsResponseItem(
-        description: jsonDecode['description'].replaceAll('.', '\n'),
-        webUrl: jsonDecode['web_url'],
-        ranking: jsonDecode['ranking_data']['ranking_string'],
-        rating: jsonDecode['rating']);
+        description: (jsonDecode['description'] == null)
+            ? ''
+            : jsonDecode['description'].replaceAll('.', '\n'),
+        webUrl: (jsonDecode['web_url'] == null) ? '' : jsonDecode['web_url'],
+        ranking: (jsonDecode['ranking_data'] == null)
+            ? ''
+            : (jsonDecode['ranking_data']['ranking_string'] == null)
+                ? ''
+                : jsonDecode['ranking_data']['ranking_string'],
+        rating: (jsonDecode['rating'] == null) ? '' : jsonDecode['rating']);
   }
 }

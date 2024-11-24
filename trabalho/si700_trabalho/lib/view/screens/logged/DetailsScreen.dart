@@ -25,7 +25,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    updateCardDetails();
     return FutureBuilder<void>(
       future: updateCardDetails(),
       builder: (context, snapshot) {

@@ -12,14 +12,14 @@ class ProfileContentBloc
     ProfileContentProvider.helper.stream.listen((onData) {
       ProfileContent.self = onData;
       add(ProfileContentEvent.Update);
+    });
 
-      ProfileContentProvider.helper.profileCollection
-          .doc(ProfileContentProvider.helper.uid)
-          .snapshots()
-          .listen((onData) {
-        ProfileContent.self = ProfileContent.fromMap(onData.data()!);
-        add(ProfileContentEvent.Update);
-      });
+    ProfileContentProvider.helper.profileCollection
+        .doc(ProfileContentProvider.helper.uid)
+        .snapshots()
+        .listen((onData) {
+      ProfileContent.self = ProfileContent.fromMap(onData.data()!);
+      add(ProfileContentEvent.Update);
     });
 
     on<ProfileContentEvent>((event, emit) {

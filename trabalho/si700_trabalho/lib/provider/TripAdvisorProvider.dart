@@ -405,7 +405,26 @@ class Tripadvisorprovider {
         "https://76accd79-8533-49a8-b646-ad9964777fd5-00-r8io3xj4d2eo.spock.replit.dev/photos?locationId=$locationId",
       );
     }
-    return jsonDecode(response.data)["data"][0]["images"]["original"]["url"];
+
+    var data = jsonDecode(response.data);
+
+    if (data == null) {
+      return "";
+    }
+
+    if (data["data"].isEmpty) {
+      return "";
+    }
+
+    if (data["data"][0]["images"]["original"]["url"] == null) {
+      return "";
+    }
+
+    if (data["data"][0]["images"]["original"]["url"] == "") {
+      return "";
+    }
+
+    return data["data"][0]["images"]["original"]["url"];
   }
 
   Future<CardContent> getDetails(
