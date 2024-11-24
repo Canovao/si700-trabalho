@@ -1,40 +1,48 @@
 import 'package:si700_trabalho/model/trip/SearchResponseItem.dart';
 
 class CardContent {
-  static CardContent? lastSelected;
+  String? imageUrl;
 
   final String locationId;
-
-  final String imageUrl;
-
   final String name;
   final String city;
   final String state;
   final String country;
-  final String description; // address_obj.string
+  final String description;
 
-  final double rating;
+  String? fullDescription;
+  String? rating;
+  String? webUrl;
 
   CardContent({
-    required this.imageUrl,
     required this.name,
     required this.country,
-    required this.rating,
     required this.description,
     required this.city,
     required this.state,
     required this.locationId,
+    this.imageUrl,
+    this.rating,
+    this.fullDescription,
+    this.webUrl,
   });
 
   static fromSearchResponseItem(SearchResponseItem item) {
     return CardContent(
-        imageUrl: '',
         name: item.name,
         country: item.addressObj.country,
-        rating: 0,
         description: item.addressObj.addressString,
         city: item.addressObj.city,
         state: item.addressObj.state,
         locationId: item.locationId);
+  }
+
+  setImgUrl(String url) {
+    imageUrl = url;
+  }
+
+  @override
+  String toString() {
+    return 'CardContent{imageUrl: $imageUrl, name: $name, city: $city, state: $state, country: $country, description: $description, fullDescription: $fullDescription, rating: $rating, webUrl: $webUrl}';
   }
 }

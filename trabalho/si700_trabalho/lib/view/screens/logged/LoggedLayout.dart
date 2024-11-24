@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:si700_trabalho/bloc/TravelBloc.dart';
 import 'package:si700_trabalho/model/ProfileContent.dart';
 import 'package:si700_trabalho/view/layout/text/ScreenSubTitleTextLayout.dart';
-import 'package:si700_trabalho/view/screens/logged/DetailsScreen.dart';
 import 'package:si700_trabalho/view/screens/logged/HomeScreen.dart';
 import 'package:si700_trabalho/view/screens/logged/ProfileScreen.dart';
 import 'package:si700_trabalho/view/screens/logged/SearchScreen.dart';
 
 class LoggedLayout extends StatefulWidget {
-  final TravelBloc _travelBloc = TravelBloc.instance;
   LoggedLayout({super.key});
 
   @override
@@ -23,10 +19,14 @@ class _LoggedLayoutState extends State<LoggedLayout> {
     return Row(
       children: [
         CircleAvatar(
-          backgroundImage: AssetImage(ProfileContent.self!.profileIcon),
+          backgroundImage: AssetImage((ProfileContent.self != null)
+              ? ProfileContent.self!.profileIcon
+              : ''),
         ),
         SizedBox(width: 10),
-        ScreenSubTitleTextlayout(text: ProfileContent.self!.name),
+        ScreenSubTitleTextlayout(
+            text:
+                (ProfileContent.self != null) ? ProfileContent.self!.name : ''),
       ],
     );
   }
@@ -40,23 +40,12 @@ class _LoggedLayoutState extends State<LoggedLayout> {
         backgroundColor: Colors.white,
         title: _getUserAvatar(),
       ),
-      body: BlocBuilder<TravelBloc, TravelState>(
-        bloc: widget._travelBloc,
-        builder: (context, state) {
-          switch (state) {
-            case TravelState.Idle:
-              return IndexedStack(
-                  index: _currentScreen,
-                  children: [HomeScreen(), SearchScreen(), ProfileScreen()]);
-            case TravelState.Details:
-              return DetailsScreen();
-          }
-        },
-      ),
+      body: IndexedStack(
+          index: _currentScreen,
+          children: [HomeScreen(), SearchScreen(), ProfileScreen()]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentScreen,
         onTap: (value) {
-          widget._travelBloc.add(TravelEvent.Idle);
           setState(() {
             _currentScreen = value;
           });

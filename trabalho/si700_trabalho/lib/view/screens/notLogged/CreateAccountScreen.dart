@@ -15,8 +15,6 @@ class CreateAccountScreen extends StatelessWidget {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  late LoginBloc loginBloc;
-
   void _chooseProfileIcon(
       BuildContext context, Function(String) onIconSelected) {
     showModalBottomSheet(
@@ -51,7 +49,7 @@ class CreateAccountScreen extends StatelessWidget {
     );
   }
 
-  CreateAccountScreen({super.key, required this.loginBloc});
+  CreateAccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +67,8 @@ class CreateAccountScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
-                    loginBloc.add(LoginEvent.NotLogged);
+                    BlocProvider.of<LoginBloc>(context)
+                        .add(LoginEvent.NotLogged);
                   },
                 ),
               ],
@@ -78,7 +77,6 @@ class CreateAccountScreen extends StatelessWidget {
             ScreenTitleTextlayout(text: 'Criar conta'),
             SizedBox(height: 20),
             ProfileIconSelectorLayout(
-              selectedProfileIcon: selectedProfileIcon,
               whenSelectIcon: (String str) {
                 selectedProfileIcon = str;
               },
@@ -159,14 +157,6 @@ class CreateAccountScreen extends StatelessWidget {
 
   void _createAccount(bool receiveNotifications, String? selectedProfileIcon,
       BuildContext context) {
-    // TODO CRIAR CONTA
-    print('Nome: ${_nameController.text}');
-    print('Email: ${_emailController.text}');
-    print('Telefone: ${_phoneController.text}');
-    print('Senha: ${_passwordController.text}');
-    print('Receber notificações por e-mail: $receiveNotifications');
-    print('Ícone de perfil selecionado: $selectedProfileIcon');
-
     if (_emailController.text == '' || _passwordController.text == '') {
       showDialog<String>(
         context: context,
@@ -210,6 +200,6 @@ class CreateAccountScreen extends StatelessWidget {
       password: _passwordController.text,
     ));
 
-    loginBloc.add(LoginEvent.NotLogged);
+    BlocProvider.of<LoginBloc>(context).add(LoginEvent.NotLogged);
   }
 }

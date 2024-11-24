@@ -18,13 +18,13 @@ class AddressResponseitem {
   });
 
   AddressResponseitem.fromJson(Map<String, dynamic> json)
-      : street1 = json['street1'],
-        street2 = json['street2'],
-        city = json['city'],
-        state = json['state'],
-        country = json['country'],
-        postalcode = json['postalcode'],
-        addressString = json['address_string'];
+      : street1 = json['street1'] ?? '',
+        street2 = json['street2'] ?? '',
+        city = json['city'] ?? '',
+        state = json['state'] ?? '',
+        country = json['country'] ?? '',
+        postalcode = json['postalcode'] ?? '',
+        addressString = json['address_string'] ?? '';
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

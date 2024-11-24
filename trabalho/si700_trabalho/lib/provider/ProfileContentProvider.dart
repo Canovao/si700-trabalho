@@ -14,9 +14,11 @@ class ProfileContentProvider {
 
   ProfileContentProvider._createInstance();
 
-  void get() async {
+  Future<ProfileContent?> get() async {
     DocumentSnapshot response = await profileCollection.doc(uid).get();
-    ProfileContent.self = ProfileContent.fromMap(response.data());
+
+    notify(ProfileContent.fromMap(response.data()));
+    return ProfileContent.fromMap(response.data());
   }
 
   Future<String> insert(ProfileContent profileContent) async {
@@ -26,7 +28,6 @@ class ProfileContentProvider {
 
   Future<String> update(ProfileContent profileContent) async {
     profileCollection.doc(uid).update(profileContent.toMap());
-    get();
     return uid;
   }
 
@@ -35,22 +36,17 @@ class ProfileContentProvider {
     return uid;
   }
 
-  StreamController? _controller;
+  StreamController _controller = StreamController.broadcast();
 
-  notify(String noteId) async {
-    _controller?.sink.add(noteId);
-  }
-
-  ProfileContent? _noteListFromSnapshot(QuerySnapshot snapshot) {
-    for (var doc in snapshot.docs) {
-      if (doc.id == uid) {
-        return ProfileContent.fromMap(doc.data());
-      }
-    }
-    return null;
+  notify(ProfileContent profile) async {
+    _controller.sink.add(profile);
   }
 
   Stream get stream {
-    return profileCollection.snapshots().map(_noteListFromSnapshot);
+    return _controller.stream;
+  }
+
+  toggleFavorite(String locationId) {
+    update(ProfileContent.self!.toggleFavorite(locationId));
   }
 }

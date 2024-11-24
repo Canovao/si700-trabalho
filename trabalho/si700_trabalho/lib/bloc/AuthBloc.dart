@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:si700_trabalho/bloc/LoginBloc.dart';
 import 'package:si700_trabalho/model/ProfileContent.dart';
 import 'package:si700_trabalho/model/UserModel.dart';
 import 'package:si700_trabalho/provider/AuthProvider.dart';
@@ -13,13 +12,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
     );
 
-    on<AuthServerEvent>((event, emit) {
+    on<AuthServerEvent>((event, emit) async {
       if (event.userModel == null) {
         ProfileContentProvider.helper.uid = "default";
         emit(Unauthenticated());
       } else {
         ProfileContentProvider.helper.uid = event.userModel!.uid;
-        ProfileContentProvider.helper.get();
+        await ProfileContentProvider.helper.get();
         emit(Authenticated(username: event.userModel!.uid));
       }
     });
@@ -61,14 +60,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 abstract class AuthEvent {}
 
 class LoginUser extends AuthEvent {
-  LoginBloc loginBloc;
   String username;
   String password;
 
-  LoginUser(
-      {required this.loginBloc,
-      required this.username,
-      required this.password});
+  LoginUser({required this.username, required this.password});
 }
 
 class RegisterUser extends AuthEvent {

@@ -24,10 +24,10 @@ class ProfileContent {
       required String name,
       required String email,
       required String phone,
-      required String profileIcon})
+      required String profileIcon,
+      required this.receiveNotifications})
       : password = another.password,
         favoritePlaces = another.favoritePlaces,
-        receiveNotifications = another.receiveNotifications,
         name = (name.isEmpty) ? another.name : name,
         email = (email.isEmpty) ? another.email : email,
         phone = (phone.isEmpty) ? another.phone : phone,
@@ -54,5 +54,24 @@ class ProfileContent {
     map["receiveNotifications"] = receiveNotifications;
     map["favoritePlaces"] = favoritePlaces;
     return map;
+  }
+
+  ProfileContent toggleFavorite(String locationId) {
+    if (favoritePlaces.contains(locationId)) {
+      favoritePlaces.remove(locationId);
+    } else {
+      favoritePlaces.add(locationId);
+    }
+    return this;
+  }
+
+  bool compare(event) {
+    if (event == null) return false;
+    return event.profileIcon == profileIcon &&
+        event.name == name &&
+        event.email == email &&
+        event.phone == phone &&
+        event.password == password &&
+        event.receiveNotifications == receiveNotifications;
   }
 }

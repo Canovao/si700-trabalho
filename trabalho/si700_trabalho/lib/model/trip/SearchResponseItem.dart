@@ -11,9 +11,7 @@ class SearchResponseItem {
   SearchResponseItem.fromJson(Map<String, dynamic> json)
       : locationId = json['location_id'],
         name = json['name'],
-        addressObj = json['address_obj'] != null
-            ? AddressResponseitem.fromJson(json['address_obj'])
-            : throw ArgumentError('address_obj cannot be null');
+        addressObj = AddressResponseitem.fromJson(json['address_obj']);
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

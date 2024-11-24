@@ -36,7 +36,6 @@ class FirebaseAuthenticationService {
     return await _firebaseAuth.signOut();
   }
 
-  // Stream
   Stream get stream {
     return _firebaseAuth.userChanges().map(
           (event) => _userFromFirebaseUser(event),

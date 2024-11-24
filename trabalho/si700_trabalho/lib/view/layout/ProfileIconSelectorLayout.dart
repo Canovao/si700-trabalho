@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:si700_trabalho/model/ProfileContent.dart';
 import 'package:si700_trabalho/model/ProfileIcons.dart';
 
 class ProfileIconSelectorLayout extends StatefulWidget {
   Function(String) whenSelectIcon;
-  String? selectedProfileIcon;
-  ProfileIconSelectorLayout(
-      {required this.selectedProfileIcon,
-      required this.whenSelectIcon,
-      super.key});
+  String? selectedProfileIcon =
+      (ProfileContent.self != null) ? ProfileContent.self!.profileIcon : null;
+  ProfileIconSelectorLayout({required this.whenSelectIcon, super.key});
 
   @override
   State<ProfileIconSelectorLayout> createState() =>

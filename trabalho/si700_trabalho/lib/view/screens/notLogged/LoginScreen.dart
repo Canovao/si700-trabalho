@@ -10,9 +10,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  late LoginBloc loginBloc;
-
-  LoginScreen({super.key, required this.loginBloc});
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +52,7 @@ class LoginScreen extends StatelessWidget {
               child: BaseTextNoStyleLayout(text: 'Login'),
             ),
             TextButton(
-              onPressed: () => _createAccount(),
+              onPressed: () => _createAccount(context),
               child: BaseTextNoStyleLayout(
                 text: 'Não tem uma conta? Criar conta',
               ),
@@ -95,13 +93,12 @@ class LoginScreen extends StatelessWidget {
     }
 
     BlocProvider.of<AuthBloc>(context).add(LoginUser(
-      loginBloc: loginBloc,
       username: _emailController.text,
       password: _passwordController.text,
     ));
   }
 
-  void _createAccount() {
-    loginBloc.add(LoginEvent.CreateAccount);
+  void _createAccount(context) {
+    BlocProvider.of<LoginBloc>(context).add(LoginEvent.CreateAccount);
   }
 }
